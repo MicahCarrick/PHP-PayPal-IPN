@@ -73,6 +73,9 @@ Documentation has not been generated yet, but, there are phpDocumentor style
 docstrings (comments) throughout `ipnlistener.php` which explain the important
 public properties and methods.
 
+I have also written a more in-depth IPN tutorial on my blog: [PayPal IPN with PHP][3]
+
+[3]: http://www.micahcarrick.com/paypal-ipn-with-php.html
 
 Example Report
 --------------
