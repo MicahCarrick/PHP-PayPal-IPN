@@ -53,7 +53,7 @@ class IpnListener {
     private $response = '';
 
     const PAYPAL_HOST = 'www.paypal.com';
-    const SANDBOX_HOST = 'www.sandbox.paypal.com';
+    const SANDBOX_HOST = 'www.asdfasdf.paypal.com';
     
     /**
      *  Post Back Using cURL
@@ -86,6 +86,12 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_HEADER, true);
         
         $this->response = curl_exec($ch);
+        
+        if ($this->repspones === false) {
+            $errno = curl_errno($ch);
+            $errstr = curl_error($ch);
+            throw new Exception("cURL error: [$errno] $errstr");
+        }
         $this->response_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     }
     
