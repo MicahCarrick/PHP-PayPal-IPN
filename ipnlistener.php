@@ -53,7 +53,7 @@ class IpnListener {
     private $response = '';
 
     const PAYPAL_HOST = 'www.paypal.com';
-    const SANDBOX_HOST = 'www.asdfasdf.paypal.com';
+    const SANDBOX_HOST = 'www.sandbox.paypal.com';
     
     /**
      *  Post Back Using cURL
