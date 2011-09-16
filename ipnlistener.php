@@ -10,7 +10,7 @@
  *  @package    PHP-PayPal-IPN
  *  @author     Micah Carrick
  *  @copyright  (c) 2011 - Micah Carrick
- *  @version    2.0.2
+ *  @version    2.0.3
  *  @license    http://opensource.org/licenses/gpl-3.0.html
  */
 class IpnListener {
@@ -87,13 +87,13 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_HEADER, true);
         
         $this->response = curl_exec($ch);
+        $this->response_status = strval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
         
-        if (empty($this->response)) {
+        if ($this->response === false || $this->response_status == '0') {
             $errno = curl_errno($ch);
             $errstr = curl_error($ch);
             throw new Exception("cURL error: [$errno] $errstr");
         }
-        $this->response_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     }
     
     /**
