@@ -5,6 +5,10 @@
  *  This shows a basic example of how to use the IpnListener() PHP class to 
  *  implement a PayPal Instant Payment Notification (IPN) listener script.
  *
+ *  For a more in depth tutorial, see my blog post:
+ *  http://www.micahcarrick.com/paypal-ipn-with-php.html
+ *
+ *  This code is available at github:
  *  https://github.com/Quixotix/PHP-PayPal-IPN
  *
  *  @package    PHP-PayPal-IPN
@@ -39,6 +43,18 @@ When you are ready to go live change use_sandbox to false.
 */
 $listener->use_sandbox = true;
 
+/*
+By default the IpnListener object is going  going to post the data back to PayPal
+using cURL over a secure SSL connection. This is the recommended way to post
+the data back, however, some people may have connections problems using this
+method. 
+
+To post over standard HTTP connection, use:
+$listener->use_ssl = false;
+
+To post using the fsockopen() function rather than cURL, use:
+$listener->use_curl = false;
+*/
 
 /*
 The processIpn() method will encode the POST variables sent by PayPal and then
@@ -46,11 +62,15 @@ POST them back to the PayPal server. An exception will be thrown if there is
 a fatal error (cannot connect, your server is not configured properly, etc.).
 Use a try/catch block to catch these fatal errors and log to the ipn_errors.log
 file we setup at the top of this file.
+
+The processIpn() method will send the raw data on 'php://input' to PayPal. You
+can optionally pass the data to processIpn() yourself:
+$verified = $listener->processIpn($my_post_data);
 */
 try {
     $verified = $listener->processIpn();
 } catch (Exception $e) {
-    error_log('PayPal IPN: '.$e->getMessage());
+    error_log($e->getMessage());
     exit(0);
 }
 
