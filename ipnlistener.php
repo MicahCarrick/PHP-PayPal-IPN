@@ -10,7 +10,7 @@
  *  @package    PHP-PayPal-IPN
  *  @author     Micah Carrick
  *  @copyright  (c) 2011 - Micah Carrick
- *  @version    2.0
+ *  @version    2.1
  *  @license    http://opensource.org/licenses/gpl-3.0.html
  */
 class IpnListener {
@@ -48,6 +48,7 @@ class IpnListener {
      */
     public $timeout = 30;       
     
+    private $post_data = array();
     private $post_uri = '';     
     private $response_status = '';
     private $response = '';
@@ -87,7 +88,7 @@ class IpnListener {
         
         $this->response = curl_exec($ch);
         
-        if ($this->repspones === false) {
+        if (empty($this->response)) {
             $errno = curl_errno($ch);
             $errstr = curl_error($ch);
             throw new Exception("cURL error: [$errno] $errstr");
@@ -213,7 +214,7 @@ class IpnListener {
         for ($i=0; $i<80; $i++) { $r .= '-'; }
         $r .= "\n";
         
-        foreach ($_POST as $key => $value) {
+        foreach ($this->post_data as $key => $value) {
             $r .= str_pad($key, 25)."$value\n";
         }
         $r .= "\n\n";
@@ -229,25 +230,36 @@ class IpnListener {
      *  back as "VERIFIED", false if the response came back "INVALID", and 
      *  throws an exception if there is an error.
      *
+     *  @param array
+     *
      *  @return boolean
      */    
-    public function processIpn() {
-        
-        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-            header('Allow: GET', true, 405);
+    public function processIpn($post_data=null) {
+        // require POST requests
+        if ($_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST') {
+            header('Allow: POST', true, 405);
             throw new Exception("Invalid HTTP request method.");
         }
         
         $encoded_data = 'cmd=_notify-validate';
         
-        foreach ($_POST as $key => $value) {
-            if (get_magic_quotes_gpc() == 1) { 
-                $encoded_data .= "&$key=".urlencode(stripslashes($value));
+        if ($post_data === null) { 
+            // use raw POST data 
+            if (!empty($_POST)) {
+                $this->post_data = $_POST;
+                $encoded_data .= '&'.file_get_contents('php://input');
             } else {
+                throw new Exception("No POST data found.");
+            }
+        } else { 
+            // use provided data array
+            $this->post_data = $post_data;
+            
+            foreach ($this->post_data as $key => $value) {
                 $encoded_data .= "&$key=".urlencode($value);
             }
         }
-        
+
         if ($this->use_curl) $this->curlPost($encoded_data); 
         else $this->fsockPost($encoded_data);
         
