@@ -68,6 +68,7 @@ can optionally pass the data to processIpn() yourself:
 $verified = $listener->processIpn($my_post_data);
 */
 try {
+    $listener->requirePostMethod();
     $verified = $listener->processIpn();
 } catch (Exception $e) {
     error_log($e->getMessage());
