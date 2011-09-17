@@ -77,6 +77,27 @@ I have also written a more in-depth IPN tutorial on my blog: [PayPal IPN with PH
 
 [3]: http://www.micahcarrick.com/paypal-ipn-with-php.html
 
+
+Known Issues
+------------
+
+__Problem__
+
+The `processIpn()` method throws the following exception:
+
+    cURL error: [52] GnuTLS recv error (-9): A TLS packet with unexpected length was received.
+
+__Solution__
+
+When cURL is compiled with GnuTLS the call to PayPal will fail if the SSL version
+is not explicitly set as a cURL option. Set the `force_ssl_v3` property to force 
+SSL 3:
+
+    $listener = new IpnListener();
+    $listener->force_ssl_v3 = true;
+
+
+
 Example Report
 --------------
 
