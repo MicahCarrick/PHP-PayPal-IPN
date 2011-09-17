@@ -235,12 +235,7 @@ class IpnListener {
      *  @return boolean
      */    
     public function processIpn($post_data=null) {
-        // require POST requests
-        if ($_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST') {
-            header('Allow: POST', true, 405);
-            throw new Exception("Invalid HTTP request method.");
-        }
-        
+
         $encoded_data = 'cmd=_notify-validate';
         
         if ($post_data === null) { 
@@ -273,6 +268,20 @@ class IpnListener {
             return false;
         } else {
             throw new Exception("Unexpected response from PayPal.");
+        }
+    }
+    
+    /**
+     *  Require Post Method
+     *
+     *  Throws an exception and sets a HTTP 405 response header if the request
+     *  method was not POST. 
+     */    
+    public function requirePostMethod() {
+        // require POST requests
+        if ($_SERVER['REQUEST_METHOD'] && $_SERVER['REQUEST_METHOD'] != 'POST') {
+            header('Allow: POST', true, 405);
+            throw new Exception("Invalid HTTP request method.");
         }
     }
 }
