@@ -96,6 +96,24 @@ SSL 3:
     $listener = new IpnListener();
     $listener->force_ssl_v3 = true;
 
+_Note: force_ssl_v3 is now true by default_
+
+
+
+__Problem__
+
+     PHP Warning: curl_setopt() [function.curl-setopt]: CURLOPT_FOLLOWLOCATION 
+     cannot be activated when in safe_mode or an open_basedir is set in ...
+
+__Solution__
+
+If you need PHP safe mode, you can disable CURLOPT_FOLLOWLOCATION using the
+`follow_location` property.
+
+    $listener = new IpnListener();
+    $listener->follow_location = false;
+
+_Note: follow_location is now false enabled by default_
 
 
 Example Report

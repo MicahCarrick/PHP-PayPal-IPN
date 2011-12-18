@@ -10,7 +10,7 @@
  *  @package    PHP-PayPal-IPN
  *  @author     Micah Carrick
  *  @copyright  (c) 2011 - Micah Carrick
- *  @version    2.0.3
+ *  @version    2.0.5
  *  @license    http://opensource.org/licenses/gpl-3.0.html
  */
 class IpnListener {
@@ -29,7 +29,15 @@ class IpnListener {
      *
      *  @var boolean
      */
-    public $force_ssl_v3 = false;     
+    public $force_ssl_v3 = true;     
+   
+    /**
+     *  If true, cURL will use the CURLOPT_FOLLOWLOCATION to follow any 
+     *  "Location: ..." headers in the response.
+     *
+     *  @var boolean
+     */
+    public $follow_location = false;     
     
     /**
      *  If true, an SSL secure connection (port 443) is used for the post back 
@@ -89,7 +97,7 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $this->follow_location);
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
