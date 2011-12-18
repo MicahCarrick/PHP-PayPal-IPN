@@ -145,7 +145,7 @@ class IpnListener {
             throw new Exception("fsockopen error: [$errno] $errstr");
         } 
 
-        $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
+        $header = "POST /cgi-bin/webscr HTTP/1.0\r\n";
         $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
         $header .= "Content-Length: ".strlen($encoded_data)."\r\n";
         $header .= "Connection: Close\r\n\r\n";
