@@ -9,8 +9,8 @@
  *
  *  @package    PHP-PayPal-IPN
  *  @author     Micah Carrick
- *  @copyright  (c) 2011 - Micah Carrick
- *  @version    2.0.5
+ *  @copyright  (c) 2012 - Micah Carrick
+ *  @version    2.1.0
  *  @license    http://opensource.org/licenses/gpl-3.0.html
  */
 class IpnListener {
