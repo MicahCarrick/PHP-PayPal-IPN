@@ -11,7 +11,6 @@
  *  @author     Micah Carrick
  *  @copyright  (c) 2012 - Micah Carrick
  *  @version    2.1.0
- *  @license    http://opensource.org/licenses/gpl-3.0.html
  */
 class IpnListener {
     
@@ -94,11 +93,10 @@ class IpnListener {
         
         $ch = curl_init();
 
-		// Added the paypal cert chain
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . "/cert/api_cert_chain.crt");
-        
+		curl_setopt($ch, CURLOPT_CAINFO, 
+		            dirname(__FILE__)."/cert/api_cert_chain.crt");
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
@@ -172,8 +170,8 @@ class IpnListener {
     }
     
     private function getPaypalHost() {
-        if ($this->use_sandbox) return IpnListener::SANDBOX_HOST;
-        else return IpnListener::PAYPAL_HOST;
+        if ($this->use_sandbox) return self::SANDBOX_HOST;
+        else return self::PAYPAL_HOST;
     }
     
     /**
