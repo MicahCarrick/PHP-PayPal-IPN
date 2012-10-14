@@ -9,6 +9,9 @@
         {
             "name": "Aditya Patadia",
             "homepage": "http://aditya.patadia.org/"
+        },
+        {   "name":"Micah Carrick",
+            "homepage":"http://www.micahcarrick.com"
         }
     ],
     "require": {
