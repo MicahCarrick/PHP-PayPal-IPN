@@ -1,0 +1,22 @@
+{
+    "name": "adityapatadia/PHP-PayPal-IPN",
+    "description": "Paypal IPN class for IPN processing",
+    "keywords": ["paypal", "ipn"],
+    "type": "library",
+    "homepage": "https://github.com/adityapatadia/PHP-PayPal-IPN",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "Aditya Patadia",
+            "homepage": "http://aditya.patadia.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "classmap": ["src"]
+    }
+}
