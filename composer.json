@@ -1,5 +1,5 @@
 {
-    "name": "adityapatadia/php-paypal-ipn",
+    "name": "eventviva/php-paypal-ipn",
     "description": "Paypal IPN class for IPN processing",
     "keywords": ["paypal", "ipn"],
     "type": "library",
