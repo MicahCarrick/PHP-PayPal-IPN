@@ -12,6 +12,9 @@
  *  @copyright  (c) 2012 - Micah Carrick
  *  @version    2.1.0
  */
+
+namespace Eventviva;
+
 class IpnListener {
     
     /**
