@@ -1,6 +1,12 @@
 PHP-PayPal-IPN
 ==============
 
+### This repo is deprecated in favor of https://github.com/paypal/sdk-core-php - latest IPN class by Paypal.
+
+### All users are recommended to use the new repository which is also available via Packagist.
+
+
+
 A PayPal Instant Payment Notification (IPN) class for PHP 5. 
 
 Use the `IpnListener` class in your PHP IPN script to handle the encoding 
