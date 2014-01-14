@@ -1,6 +1,5 @@
 {
   "name": "quixotix/paypalipn",
-  "version": "2.1.0",
   "autoload": {
     "psr-0": {
       "Quixotix\\": "lib/"
