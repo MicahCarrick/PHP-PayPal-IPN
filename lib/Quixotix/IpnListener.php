@@ -12,6 +12,9 @@
  *  @copyright  (c) 2012 - Micah Carrick
  *  @version    2.1.0
  */
+
+namespace Quixotix;
+
 class IpnListener {
     
     /**
@@ -96,7 +99,7 @@ class IpnListener {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_CAINFO, 
-		            dirname(__FILE__)."/cert/api_cert_chain.crt");
+		            dirname(__FILE__)."/../../cert/api_cert_chain.crt");
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
