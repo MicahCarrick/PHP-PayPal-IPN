@@ -10,7 +10,7 @@
  *  @package    PHP-PayPal-IPN
  *  @author     Micah Carrick
  *  @copyright  (c) 2012 - Micah Carrick
- *  @version    2.1.0
+ *  @version    2.1.1
  */
 class IpnListener {
     
@@ -106,7 +106,7 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_HEADER, true);
         
         if ($this->force_ssl_v3) {
-            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+            curl_setopt($ch, CURLOPT_SSLVERSION, 4);
         }
         
         $this->response = curl_exec($ch);
