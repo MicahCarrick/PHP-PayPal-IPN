@@ -28,7 +28,7 @@ class IpnListener {
      *
      *  @var boolean
      */
-    public $force_ssl_v3 = true;     
+    public $force_ssl_v3 = false;     
    
     /**
      *  If true, cURL will use the CURLOPT_FOLLOWLOCATION to follow any 
@@ -93,10 +93,10 @@ class IpnListener {
         
         $ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_CAINFO, 
-		            dirname(__FILE__)."/cert/api_cert_chain.crt");
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+	curl_setopt($ch, CURLOPT_CAINFO, 
+	            dirname(__FILE__)."/cert/api_cert_chain.crt");
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
@@ -106,7 +106,10 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_HEADER, true);
         
         if ($this->force_ssl_v3) {
-            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        	curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_SSLv3);
+        }
+        else {
+		curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_DEFAULT);
         }
         
         $this->response = curl_exec($ch);
