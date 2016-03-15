@@ -28,7 +28,7 @@ class IpnListener {
      *
      *  @var boolean
      */
-    public $force_ssl_v3 = true;     
+    public $force_tls_v2 = true;     
    
     /**
      *  If true, cURL will use the CURLOPT_FOLLOWLOCATION to follow any 
@@ -105,9 +105,17 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
         
-        if ($this->force_ssl_v3) {
-            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
-        }
+	//https://github.com/paypal/TLS-update#php
+        //The Payment Card Industry (PCI) Council has mandated that early versions of TLS be retired from service. 
+        //All organizations that handle credit card information are required to comply with this standard. As part of this obligation, 
+        //PayPal is updating its services to require TLS 1.2 for all HTTPS connections. At this time, PayPal will also require HTTP/1.1 
+        //for all connections.
+        //if ($this->force_ssl_v3) {
+        //    curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        //}
+        if($this->force_tls_v2){
+		curl_setopt($ch, CURLOPT_SSLVERSION, 6); //force tls_v2 for testing in sandbox
+	}
         
         $this->response = curl_exec($ch);
         $this->response_status = strval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
