@@ -1,6 +1,8 @@
 PHP-PayPal-IPN
 ==============
 
+__This code is over a decade old and no longer relevant. Please consult Paypal developer documentation instead.__
+
 A PayPal Instant Payment Notification (IPN) class for PHP 5. 
 
 Use the `IpnListener` class in your PHP IPN script to handle the encoding 
