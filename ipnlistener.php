@@ -82,14 +82,12 @@ class IpnListener {
      *  @param  string  The post data as a URL encoded string
      */
     protected function curlPost($encoded_data) {
-
-        if ($this->use_ssl) {
+        if ($this->use_ssl)
             $uri = 'https://'.$this->getPaypalHost().'/cgi-bin/webscr';
-            $this->post_uri = $uri;
-        } else {
+        else
             $uri = 'http://'.$this->getPaypalHost().'/cgi-bin/webscr';
-            $this->post_uri = $uri;
-        }
+        
+        $this->post_uri = $uri;
         
         $ch = curl_init();
 
