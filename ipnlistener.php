@@ -25,10 +25,11 @@ class IpnListener {
     /**
      *  If true, explicitly sets cURL to use SSL version 3. Use this if cURL
      *  is compiled with GnuTLS SSL.
+	 *  DEPRECATED: SSL V3 can't be used anymore (POODLE): https://www.paypal-community.com/t5/PayPal-Forward/PayPal-Response-to-SSL-3-0-Vulnerability-aka-POODLE/ba-p/891829
      *
      *  @var boolean
      */
-    public $force_ssl_v3 = true;     
+    public $force_ssl_v3 = false;     
    
     /**
      *  If true, cURL will use the CURLOPT_FOLLOWLOCATION to follow any 
@@ -105,9 +106,6 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
         
-        if ($this->force_ssl_v3) {
-            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
-        }
         
         $this->response = curl_exec($ch);
         $this->response_status = strval(curl_getinfo($ch, CURLINFO_HTTP_CODE));
