@@ -10,7 +10,7 @@
  *  @package    PHP-PayPal-IPN
  *  @author     Micah Carrick
  *  @copyright  (c) 2012 - Micah Carrick
- *  @version    2.1.0
+ *  @version    2.1.1
  */
 class IpnListener {
     
@@ -28,7 +28,7 @@ class IpnListener {
      *
      *  @var boolean
      */
-    public $force_ssl_v3 = true;     
+    public $force_ssl_v3 = false;     
    
     /**
      *  If true, cURL will use the CURLOPT_FOLLOWLOCATION to follow any 
@@ -93,10 +93,10 @@ class IpnListener {
         
         $ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_CAINFO, 
-		            dirname(__FILE__)."/cert/api_cert_chain.crt");
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+	curl_setopt($ch, CURLOPT_CAINFO, 
+	dirname(__FILE__)."/cert/api_cert_chain.crt");
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
@@ -104,8 +104,11 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 1);
         
         if ($this->force_ssl_v3) {
+            // You should know that Paypal does not recommand using this version
+            // https://github.com/paypal/rest-api-sdk-php/commit/8e193664151578a0eeeca1129c9f3203951ac15a
             curl_setopt($ch, CURLOPT_SSLVERSION, 3);
         }
         
