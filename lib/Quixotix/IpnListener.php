@@ -12,6 +12,9 @@
  *  @copyright  (c) 2012 - Micah Carrick
  *  @version    2.1.0
  */
+
+namespace Quixotix;
+
 class IpnListener {
     
     /**
@@ -23,12 +26,22 @@ class IpnListener {
     public $use_curl = true;     
     
     /**
+     *
      *  If true, explicitly sets cURL to use SSL version 3. Use this if cURL
      *  is compiled with GnuTLS SSL.
      *
      *  @var boolean
      */
-    public $force_ssl_v3 = true;     
+    public $force_ssl_v3 = false;     
+  
+    /**
+     *
+     *  If true, explicitly sets cURL to use SSL version 4. Use this if cURL
+     *  is compiled with GnuTLS SSL.
+     *
+     *  @var boolean
+     */
+    public $force_ssl_v4 = true;     
    
     /**
      *  If true, cURL will use the CURLOPT_FOLLOWLOCATION to follow any 
@@ -96,7 +109,7 @@ class IpnListener {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 		curl_setopt($ch, CURLOPT_CAINFO, 
-		            dirname(__FILE__)."/cert/api_cert_chain.crt");
+		            dirname(__FILE__)."/../../cert/api_cert_chain.crt");
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_data);
@@ -105,7 +118,9 @@ class IpnListener {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
         
-        if ($this->force_ssl_v3) {
+        if ($this->force_ssl_v4) {
+            curl_setopt($ch, CURLOPT_SSLVERSION, 4);
+        } elseif ($this->force_ssl_v3) {
             curl_setopt($ch, CURLOPT_SSLVERSION, 3);
         }
         

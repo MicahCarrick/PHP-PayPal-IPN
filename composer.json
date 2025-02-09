@@ -1,0 +1,9 @@
+{
+  "name": "quixotix/paypalipn",
+  "autoload": {
+    "psr-0": {
+      "Quixotix\\": "lib/"
+    }
+  }
+}
+
