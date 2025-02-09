@@ -15,8 +15,8 @@
 class IpnListener {
     
     /**
-     *  If true, the recommended cURL PHP library is used to send the post back 
-     *  to PayPal. If flase then fsockopen() is used. Default true.
+     *  If true, the recommended cURL PHP library is usedto send the post back 
+     *  to PayPal. If flase or curl is not available then fsockopen() is used. Default true.
      *
      *  @var boolean
      */
@@ -279,7 +279,7 @@ class IpnListener {
             }
         }
 
-        if ($this->use_curl) $this->curlPost($encoded_data); 
+        if ($this->use_curl && function_exists('curl_version')) $this->curlPost($encoded_data); 
         else $this->fsockPost($encoded_data);
         
         if (strpos($this->response_status, '200') === false) {
