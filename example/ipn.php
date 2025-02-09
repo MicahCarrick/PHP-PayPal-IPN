@@ -44,7 +44,7 @@ When you are ready to go live change use_sandbox to false.
 $listener->use_sandbox = true;
 
 /*
-By default the IpnListener object is going  going to post the data back to PayPal
+By default the IpnListener object is going to post the data back to PayPal
 using cURL over a secure SSL connection. This is the recommended way to post
 the data back, however, some people may have connections problems using this
 method. 
